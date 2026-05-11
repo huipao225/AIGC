@@ -5,7 +5,7 @@ from fastapi import APIRouter, File, Request, UploadFile
 from fastapi.responses import JSONResponse
 
 from app.config import settings
-from app.models.schemas import ErrorDetail, ErrorResponse
+from app.pydantic_schemas.schemas import ErrorDetail, ErrorResponse
 from app.services.detector_service import DetectorService
 from app.services.statistical_service import StatisticalService
 from app.services.text_processor import chunk_text, clean_text
