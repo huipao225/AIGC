@@ -4,6 +4,7 @@ __pycache__
 *.db
 .git
 .gitignore
-models/
+/models/
+*.safetensors
 tests/
 *.md
