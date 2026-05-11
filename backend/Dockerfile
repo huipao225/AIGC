@@ -1,41 +1,39 @@
 FROM python:3.12-slim
 
-WORKDIR /app
+WORKDIR /code
 
-# Use China mirrors for ARM64-compatible downloads
+# Use China mirrors
 ARG PIP_INDEX=https://pypi.tuna.tsinghua.edu.cn/simple
 ENV PIP_INDEX_URL=${PIP_INDEX}
 ENV HF_ENDPOINT=https://hf-mirror.com
 
-# Use Debian China mirrors for apt
+# Debian China mirrors
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources
 
-# Install system dependencies
+# System dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libmupdf-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install CPU-only PyTorch via Chinese mirrors
-# Primary: SJTU PyTorch mirror for the CPU torch wheel
-# Fallback: Tsinghua mirror for dependencies
+# CPU-only PyTorch via SJTU mirror
 RUN pip install --no-cache-dir torch \
     -i https://mirror.sjtu.edu.cn/pytorch-wheels/cpu/ \
     --extra-index-url https://pypi.tuna.tsinghua.edu.cn/simple \
     --trusted-host mirror.sjtu.edu.cn \
     --trusted-host pypi.tuna.tsinghua.edu.cn
 
-# Install remaining Python dependencies
+# Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Pre-download HuggingFace models
+# Pre-download models
 COPY scripts/download_models.py /tmp/download_models.py
 RUN python /tmp/download_models.py
 
-# Copy application code
-COPY ./app /app/app
+# Application code
+COPY ./app /code/app
 
-RUN mkdir -p /app/models
+RUN mkdir -p /code/models
 
 EXPOSE 8000
 
