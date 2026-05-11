@@ -15,12 +15,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libmupdf-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install CPU-only PyTorch (ARM64 compatible)
-# torch wheel from pytorch.org/cpu, dependencies from Tsinghua mirror
+# Install CPU-only PyTorch via Chinese mirrors
+# Primary: SJTU PyTorch mirror for the CPU torch wheel
+# Fallback: Tsinghua mirror for dependencies
 RUN pip install --no-cache-dir torch \
-    --index-url https://download.pytorch.org/whl/cpu \
+    -i https://mirror.sjtu.edu.cn/pytorch-wheels/cpu/ \
     --extra-index-url https://pypi.tuna.tsinghua.edu.cn/simple \
-    --trusted-host download.pytorch.org
+    --trusted-host mirror.sjtu.edu.cn \
+    --trusted-host pypi.tuna.tsinghua.edu.cn
 
 # Install remaining Python dependencies
 COPY requirements.txt .
