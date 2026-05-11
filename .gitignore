@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Environment (contains secrets)
+.env
+backend/.env
+
+# Database
+*.db
+
+# Model files (large, downloaded on deploy)
+models/
+*.pt
+*.bin
+*.safetensors
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / Claude
+.claude/
+.vscode/
+.idea/
+
+# Temp
+.cache/
+*.log
