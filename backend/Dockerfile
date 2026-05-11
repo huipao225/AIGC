@@ -15,8 +15,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libmupdf-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install CPU-only PyTorch
-RUN pip install --no-cache-dir torch
+# Install CPU-only PyTorch (ARM64 compatible)
+# torch wheel from pytorch.org/cpu, dependencies from Tsinghua mirror
+RUN pip install --no-cache-dir torch \
+    --index-url https://download.pytorch.org/whl/cpu \
+    --extra-index-url https://pypi.tuna.tsinghua.edu.cn/simple \
+    --trusted-host download.pytorch.org
 
 # Install remaining Python dependencies
 COPY requirements.txt .
