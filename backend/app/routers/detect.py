@@ -1,3 +1,4 @@
+import logging
 import time
 
 from fastapi import APIRouter, Request
@@ -9,6 +10,7 @@ from app.services.detector_service import DetectorService
 from app.services.statistical_service import StatisticalService
 from app.services.text_processor import chunk_text, clean_text
 
+logger = logging.getLogger(__name__)
 router = APIRouter(tags=["detection"])
 
 
@@ -42,6 +44,9 @@ async def detect(request: Request, body: DetectRequest) -> JSONResponse:
                 ),
             ).model_dump(),
         )
+
+    preview = body.text[:200].replace("\n", "\\n")
+    logger.info("检测请求 — 长度=%d 预览: %s", len(body.text), preview)
 
     t0 = time.time()
 

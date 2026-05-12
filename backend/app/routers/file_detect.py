@@ -76,6 +76,9 @@ async def detect_file(request: Request, file: UploadFile = File(...)) -> JSONRes
             ).model_dump(),
         )
 
+    preview = text[:200].replace("\n", "\\n")
+    logger.info("文件检测 — 文件=%s 长度=%d 预览: %s", file.filename, len(text), preview)
+
     t0 = time.time()
 
     cleaned = clean_text(text)
