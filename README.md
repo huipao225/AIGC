@@ -1,10 +1,10 @@
 # 灰袍 — AIGC 文本检测系统
 
-> Grey Cloak: AI-Generated Content Text Detector
+>White Water: AI-Generated Content Text Detector
 
 ## 项目概述
 
-**灰袍**（Grey Cloak）是一个基于深度学习的 AIGC 文本检测系统，能够识别文本内容是由人工撰写还是由 AI（如 ChatGPT、GPT-4 等大语言模型）生成。系统采用多层检测策略，结合多种方法进行综合判断，提供概率评分和详细的分析报告。
+**灰袍**（White Water）是一个基于深度学习的 AIGC 文本检测系统，能够识别文本内容是由人工撰写还是由 AI（如 ChatGPT、GPT-4 等大语言模型）生成。系统采用多层检测策略，结合多种方法进行综合判断，提供概率评分和详细的分析报告。
 
 ### 核心功能
 
