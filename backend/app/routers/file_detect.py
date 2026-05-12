@@ -10,6 +10,7 @@ from app.services.detector_service import DetectorService
 from app.services.statistical_service import StatisticalService
 from app.services.text_processor import chunk_text, clean_text
 from app.utils.file_parser import FileParseError, extract_text
+from app.utils.save_text import save_submission
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["file-detection"])
@@ -118,14 +119,15 @@ async def detect_file(request: Request, file: UploadFile = File(...)) -> JSONRes
 
     processing_ms = round((time.time() - t0) * 1000, 2)
 
+    classification = "AI-generated" if final_score > 0.5 else "Human-written"
+    save_submission(text, classification, final_score, file.filename)
+
     return JSONResponse(
         content={
             "status": "success",
             "data": {
                 "overall_score": final_score,
-                "classification": (
-                    "AI-generated" if final_score > 0.5 else "Human-written"
-                ),
+                "classification": classification,
                 "confidence": confidence,
                 "breakdown": {
                     "roberta": {"score": avg_roberta},

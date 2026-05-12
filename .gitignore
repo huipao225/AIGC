@@ -28,3 +28,6 @@ Thumbs.db
 # Temp
 .cache/
 *.log
+
+# Detection logs (saved submissions)
+logs/
